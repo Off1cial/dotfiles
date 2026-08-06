@@ -1,0 +1,97 @@
+* {
+    font-family: "0xProto Nerd Font";
+    font-size: 11px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+#waybar {
+    background: #050505;
+    color: #d8d8d8;
+    border: none;
+}
+
+/* ---------------- Workspaces ---------------- */
+
+#workspaces {
+    background: transparent;
+    margin-left: 8px;
+}
+
+#workspaces button {
+    background: transparent;
+    color: #555555;
+    border: none;
+    padding: 0 8px;
+}
+
+#workspaces button.active {
+    color: #00d9ff;
+}
+
+#workspaces button:hover {
+    color: #ffffff;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* ---------------- Modules ---------------- */
+
+#clock,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#battery,
+#custom-uptime,
+#tray,
+#custom-power {
+    background: transparent;
+    color: #d8d8d8;
+    border: none;
+    padding: 0 10px;
+}
+
+/* Cyan accent */
+
+#clock {
+    color: #00d9ff;
+}
+
+#workspaces button.active {
+    color: #00d9ff;
+}
+
+/* Battery */
+
+#battery.warning {
+    color: #ffaa00;
+}
+
+#battery.critical {
+    color: #ff3333;
+}
+
+#battery.charging {
+    color: #00ff88;
+}
+
+/* Exit */
+
+#custom-power {
+    color: #ff4444;
+}
+
+#custom-power:hover {
+    color: #ffffff;
+}
+
+/* Tray */
+
+#tray > .passive {
+    opacity: 0.5;
+}
+
+#tray > .needs-attention {
+    color: #ff3333;
+}

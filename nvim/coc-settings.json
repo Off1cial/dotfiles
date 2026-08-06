@@ -1,0 +1,9 @@
+{
+  "suggest.enablePreview": true,
+  "diagnostic.enable": true,
+  "diagnostic.virtualText": true,
+  "inlayHint.enable": false,
+  "clangd.path": "/usr/bin/clangd",
+  "suggest.floatEnable": true,
+}
+
