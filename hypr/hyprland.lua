@@ -98,17 +98,21 @@ hl.env("HYPRCURSOR_SIZE", "18")
 hl.config({
     general = {
         gaps_in  = 2,
-        gaps_out = 0,
+        gaps_out = 2,
 
         border_size = 2,
 
-
-        ---active_border   = { colors = {"rgba(ff09f8ee)", "rgba(be09f8ee)"}, angle = 45 },
+        --col = {
+        --  active_border = "rgba(00000000)" ,
+        --  inactive_border = "rgba(00000000)"
+        --},
 
         col = {
             active_border   = { colors = {"rgba(595959aa)", "rgba(696969aa)"}, angle = 45 },
             inactive_border = "rgba(595959aa)",
         },
+  
+
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
         resize_on_border = false,
@@ -278,6 +282,7 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus --new-window"))
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())

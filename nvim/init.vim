@@ -1,8 +1,22 @@
 set termguicolors
 set signcolumn=no
 set background=dark
-"set number
+set number
 
+" Better clipboard handling
+set clipboard=unnamedplus
+
+" Map Ctrl+C to copy in visual mode
+vnoremap <C-c> "+y
+
+" Map Ctrl+V to paste in insert mode
+inoremap <C-v> <ESC>"+pa
+
+" Map Ctrl+X to cut in visual mode
+vnoremap <C-x> "+d
+
+" Enable system clipboard for all operations
+set clipboard=unnamed,unnamedplus
 
 call plug#begin('~/.local/share/nvim/autoload/plug.vim')
 
@@ -12,7 +26,9 @@ Plug 'rebelot/kanagawa.nvim'
 Plug 'olimorris/onedarkpro.nvim'
 Plug 'projekt0n/github-nvim-theme'
 Plug 'nyoom-engineering/oxocarbon.nvim'
-Plug 'ellisonleao/gruvbox.nvim'
+Plug 'ilof2/posterpole.nvim'
+"Plug 'ellisonleao/gruvbox.nvim'
+Plug 'morhetz/gruvbox'
 Plug 'folke/tokyonight.nvim'
 Plug 'tanvirtin/monokai.nvim'
 Plug 'khoido2003/monokai-v2.nvim'
@@ -59,7 +75,8 @@ lua << EOF
 require('lualine').setup({
   options = {
     icons_enabled = true,
-    theme = 'vscode',
+    theme = 'posterpole',
+
   }
 })
 EOF
@@ -68,7 +85,7 @@ EOF
 lua << EOF
 require('nvim-treesitter.configs').setup({
   branch = 'master',
-  ensure_installed = {"c", "cpp", "lua", "python"},
+  ensure_installed = {"c",  "asm", "cpp", "lua", "python"},
   highlight = { 
     enable = true,
     additional_vim_regex_highlighting = false,
@@ -85,13 +102,13 @@ EOF
 "
 "
 "
-lua << EOF
-require("gruvbox").setup({
-  contrast = "hard",
-  transparent = false,
-  bold = false,
-})
-EOF
+"lua << EOF
+"require("gruvbox").setup({
+"  contrast = "hard",
+"  transparent = false,
+"  bold = false,
+"})
+"EOF
 
 
 
@@ -106,6 +123,7 @@ require('kanagawa').setup({
   transparent = false,
   bold = false,
   italic = false,
+  theme = 'wave',
 })
 EOF
 
@@ -178,21 +196,64 @@ let g:gruvbox_material_ui_contrast = 'high'
 let g:gruvbox_material_float_style = 'dim'
 let g:gruvbox_material_better_performance = 1
 
+" morhetz gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_bold = 1
 
 "kanagawa, monochrome, oxocarbon, gruvbox, thematrix, doom-one,
 "github_dark_default
-colorscheme kanagawa
+colorscheme posterpole
+"highlight Normal guibg=#181a1b ctermbg=NONE
 
-highlight Normal guibg=NONE ctermbg=NONE
-highlight NormalNC guibg=NONE ctermbg=NONE
-highlight NormalFloat guibg=NONE ctermbg=NONE
-highlight SignColumn guibg=NONE ctermbg=NONE
-highlight EndOfBuffer guibg=NONE ctermbg=NONE
+" uncomment all for transparency
+"highlight Normal guibg=NONE ctermbg=NONE
+"highlight NormalNC guibg=NONE ctermbg=NONE
+"highlight NormalFloat guibg=NONE ctermbg=NONE
+"highlight SignColumn guibg=NONE ctermbg=NONE
+"highlight EndOfBuffer guibg=NONE ctermbg=NONE
 
 highlight! link @function Function
 highlight! link @function.call Function
 highlight! link @function.call Function
 highlight! link @function.builtin Function
+highlight! link @variable Identifier
+
+let g:terminal_buf = -1
+let g:terminal_win = -1
+
+function! ToggleTerminal()
+    if g:terminal_win != -1 && win_gotoid(g:terminal_win)
+        close
+        let g:terminal_win = -1
+        return
+    endif
+
+    botright 12split
+
+    if g:terminal_buf == -1 || !bufexists(g:terminal_buf)
+        terminal
+        let g:terminal_buf = bufnr('%')
+    else
+        execute 'buffer ' . g:terminal_buf
+    endif
+
+    let g:terminal_win = win_getid()
+
+    startinsert
+endfunction
+
+nnoremap <leader>t :call ToggleTerminal()<CR>
+tnoremap <Esc> <C-\><C-N>
 
 
+" TAB for autocomplete, otherwise insert 2 spaces
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#confirm() :
+      \ coc#expandable() ? "\<C-r>=coc#rpc#request('doComplete', [''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 
+" Alternative: If you want TAB to always insert spaces when not in completion menu
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#confirm() :
+      \ "\<TAB>"

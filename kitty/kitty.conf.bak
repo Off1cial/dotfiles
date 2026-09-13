@@ -2,25 +2,28 @@
 #include ./mocha.conf
 #include ./github.conf
 #include ./gruvbox.conf
-include ./gruvmaterialdarkhard.conf
+#include ./gruvmaterialdarkhard.conf
+
 
 allow_remote_control yes
 window_padding_width 0
-# font_family SF Mono
+font_family SF Mono
 #font_family Hack Nerd Font
 #font_family JetBrainsMono Nerd Font 
 #font_family Consolas
-font_family IBM Plex Mono
+#font_family IBM Plex Mono
+font_family Roboto Mono
 font_size 12
 
 
 # BEGIN_KITTY_FONTS
-#font_family      family="SFMono Nerd Font Mono"
+#font_family      family="ProFont IIx Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
 # END_KITTY_FONTS
 mouse_hide_wait -1
 
+background_opacity 1.0
 cursor none
 cursor_shape block
